@@ -1,0 +1,40 @@
+group 'com.shingo.rtsp.flutter_rtsp_player'
+version '1.0'
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.3.0'
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 31
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        minSdkVersion 16
+    }
+
+}
+dependencies {
+  //  implementation 'org.videolan.android:libvlc-all:4.0.0-eap11'
+    implementation 'org.videolan.android:libvlc-all:3.6.0-eap8'
+}
