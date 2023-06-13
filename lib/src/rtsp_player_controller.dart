@@ -13,6 +13,8 @@ class RtspPlayerController extends ChangeNotifier {
   /// Indicates whether or not the vlc is ready to play.
   bool isInitialized = false;
 
+  bool playInterrupted = false;
+
   Future<void> onPlatformViewCreated(int viewId) async {
     _viewId = viewId;
     await _initialize();

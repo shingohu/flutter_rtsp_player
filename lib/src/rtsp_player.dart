@@ -34,11 +34,9 @@ class _RtspPlayerState extends State<RtspPlayer>
   bool get wantKeepAlive => true;
 
   bool _visibility = false;
-  bool _inBackground = false;
 
   @override
   void initState() {
-    WidgetsBinding.instance.addObserver(this);
     widget.controller.addListener(refresh);
     super.initState();
   }
@@ -50,24 +48,7 @@ class _RtspPlayerState extends State<RtspPlayer>
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    super.didChangeAppLifecycleState(state);
-    if (state == AppLifecycleState.resumed) {
-      if (_inBackground) {
-        _inBackground = false;
-        _onVisibilityChanged();
-      }
-    } else {
-      if (!_inBackground) {
-        _inBackground = true;
-        _onVisibilityChanged();
-      }
-    }
-  }
-
-  @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
     widget.controller.removeListener(refresh);
     super.dispose();
   }
@@ -165,8 +146,9 @@ class _RtspPlayerState extends State<RtspPlayer>
       return;
     }
     if (widget.controller.isInitialized) {
-      if (_visibility && _inBackground == false) {
-        if (widget.controller.autoPlay) {
+      if (_visibility) {
+        if (widget.controller.autoPlay &&
+            widget.controller.playInterrupted == false) {
           widget.controller.play();
         }
       } else {
